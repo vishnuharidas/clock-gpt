@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkbox Clock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .clock {
+            display: flex;
+        }
+
+        .digit-container {
+            display: flex;
+        }
+
+        .digit {
+            display: grid;
+            grid-template-columns: repeat(4, 20px);
+            grid-template-rows: repeat(6, 20px);
+            gap: 2px;
+            margin-right: 10px;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin: 0;
+            cursor: default;
+        }
+
+        .time-section {
+            margin-right: 20px;
+        }
+
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .info-text {
+            font-size: 1rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            font-size: 1rem;
+            text-align: center;
+            margin-top: 40px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .info-box a {
+            color: #00f;
+            text-decoration: none;
+        }
+
+        .info-box a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <h1 class="title">ClockGPT</h1>
+        <p class="info-text">This clock was generated using ChatGPT4.</p>
+        <div class="clock">
+            <div class="clock">
+                <div class="time-section hours">
+                    <div class="digit-container">
+                        <div class="digit" id="hour-1"></div>
+                        <div class="digit" id="hour-2"></div>
+                    </div>
+                </div>
+                <div class="time-section minutes">
+                    <div class="digit-container">
+                        <div class="digit" id="minute-1"></div>
+                        <div class="digit" id="minute-2"></div>
+                    </div>
+                </div>
+                <div class="time-section seconds">
+                    <div class="digit-container">
+                        <div class="digit" id="second-1"></div>
+                        <div class="digit" id="second-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="info-box">
+            <p>Check out the GitHub repo <a href="https://github.com/vishnuharidas/clock-gpt" target="_blank"
+                    rel="noopener noreferrer">here</a>.</p>
+        </div>
+    </div>
+
+    <script>
+        const segments = [
+            // I added the arrays below. ChatGPT4 failed to correctly pick the 
+            // checkboxes to use, but it correctly instructed me on how to pick the 
+            // boxes by drawing a grid on the paper and drawing the number over it.
+            //  - Vishnu Haridas
+            [1, 2, 3, 4, 8, 12, 16, 20, 24, 23, 22, 21, 17, 13, 9, 5], // 0
+            [4, 8, 12, 16, 20, 24], // 1
+            [1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 17, 21, 22, 23, 24], // 2
+            [1, 2, 3, 4, 8, 12, 11, 10, 16, 20, 24, 23, 22, 21], // 3
+            [1, 5, 9, 13, 14, 15, 16, 4, 8, 12, 20, 24], // 4
+            [4, 3, 2, 1, 5, 9, 10, 11, 12, 16, 20, 24, 23, 22, 21], // 5
+            [4, 3, 2, 1, 5, 9, 10, 11, 12, 16, 20, 24, 23, 22, 21, 17, 13], // 6
+            [1, 2, 3, 4, 8, 12, 16, 20, 24], // 7
+            [1, 2, 3, 4, 8, 12, 16, 20, 24, 23, 22, 21, 17, 13, 9, 5, 10, 11], // 8
+            [15, 14, 13, 9, 5, 1, 2, 3, 4, 8, 12, 16, 20, 24, 23, 22, 21], // 9
+        ];
+
+        function createCheckbox(index) {
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            //checkbox.disabled = true;
+            return checkbox;
+        }
+
+        function updateDigit(digitId, number) {
+            const digit = document.getElementById(digitId);
+            digit.innerHTML = '';
+            const segment = segments[number];
+            for (let i = 1; i <= 24; i++) {
+                const checkbox = createCheckbox(i);
+                if (segment.includes(i)) {
+                    checkbox.checked = true;
+                }
+                digit.appendChild(checkbox);
+            }
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            updateDigit('hour-1', parseInt(hours[0]));
+            updateDigit('hour-2', parseInt(hours[1]));
+            updateDigit('minute-1', parseInt(minutes[0]));
+            updateDigit('minute-2', parseInt(minutes[1]));
+            updateDigit('second-1', parseInt(seconds[0]));
+            updateDigit('second-2', parseInt(seconds[1]));
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+
+</html>
