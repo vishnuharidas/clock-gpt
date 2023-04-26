@@ -1,6 +1,6 @@
 # ClockGPT
 
-ClockGPT is a digital clock web page that displays the current time using a 4x6 grid of checkboxes, styled to resemble a 7-segment display. This project was generated using ChatGPT4, an advanced language model developed by OpenAI.
+[ClockGPT](https://clock-gpt.web.app/) is a digital clock web page that displays the current time using a 4x6 grid of checkboxes, styled to resemble a 7-segment display. This project was generated using ChatGPT4, an advanced language model developed by OpenAI.
 
 ![ClockGPT Screenshot](screenshot.png)
 
