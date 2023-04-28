@@ -287,8 +287,8 @@
 
             const checkboxes = container.querySelectorAll('input[type="checkbox"]');
 
-            segments[number].forEach((index) => {
-                checkboxes[index - 1].checked = true;
+            checkboxes.forEach((checkbox, index) => {
+                checkbox.checked = segments[number].includes(index + 1);
             });
         }
 
@@ -301,9 +301,6 @@
             [hours, minutes, seconds].forEach((section, sectionIndex) => {
                 for (let i = 0; i < 2; i++) {
                     const container = document.querySelector(`#section-${sectionIndex}-digit-${i}`);
-                    container.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
-                        checkbox.checked = false;
-                    });
                     setNumber(container, parseInt(section[i]));
                 }
             });
